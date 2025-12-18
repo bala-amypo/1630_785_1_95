@@ -1,5 +1,5 @@
 package com.example.demo.repository;
 
-public interface BudgetPlanRepository extends JpaRepository<TransactionLog,Long>{
+public interface BudgetPlanRepository extends JpaRepository<BudegtPlan,Long>{
     
 }
