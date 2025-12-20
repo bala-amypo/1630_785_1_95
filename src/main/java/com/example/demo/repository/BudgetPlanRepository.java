@@ -5,6 +5,6 @@ import org.springframework.stereotype.Repository;
 import com.example.demo.model.BudgetPlan;
 
 @Repository
-public interface BudgetPlanRepository extends JpaRepository<BudegtPlan,Long>{
+public interface BudgetPlanRepository extends JpaRepository<BudgetPlan,Long>{
     
 }
