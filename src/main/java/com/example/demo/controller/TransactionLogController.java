@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import com.example.demo.model.TransactionLog;
 import com.example.demo.service.TransactionService;
@@ -29,11 +30,11 @@ public class TransactionLogController{
     public String dele(@PathVariable Long id){
         return ser.DeleteData2(id);
     }
-    @GetMapping("/finded/{id}")
+    @GetMapping("/find/{id}")
     public TransactionLog  Find(@PathVariable Long id){
         return ser.getData2(id);
     }
-    @PutMapping("/Put/{id}")
+    @PutMapping("/put/{id}")
     public TransactionLog  putVal(@PathVariable Long id,@RequestBody TransactionLog  entity){
         return ser.updateData2(id,entity);
     }
