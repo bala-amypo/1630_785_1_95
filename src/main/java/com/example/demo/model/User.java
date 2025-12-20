@@ -1,6 +1,7 @@
 package com.example.model;
 
-
+@Entity
+@D
 
 public class User{
     @Id
