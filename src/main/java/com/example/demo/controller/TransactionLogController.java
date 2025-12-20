@@ -24,15 +24,15 @@ public class TransactionLogController{
     public List<TransactionLog> getVal(){
         return ser.getAllData2();
     }
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/deleted/{id}")
     public String dele(@PathVariable Long id){
         return ser.DeleteData2(id);
     }
-    @GetMapping("/find/{id}")
+    @GetMapping("/finded/{id}")
     public TransactionLog  Find(@PathVariable Long id){
         return ser.getData2(id);
     }
-    @PutMapping("/put/{id}")
+    @PutMapping("/Put/{id}")
     public TransactionLog  putVal(@PathVariable Long id,@RequestBody TransactionLog  entity){
         return ser.updateData2(id,entity);
     }
