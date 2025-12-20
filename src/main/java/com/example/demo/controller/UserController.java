@@ -16,7 +16,7 @@ import jakarta.validation.Valid;
 @RestController
 public class UserController{
     @Autowired  UserService ser;
-    @PostMapping("/post")
+    @PostMapping("/register")
     public User sendData(@RequestBody User stu){
         return ser.postData1(stu);
     }
