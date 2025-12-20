@@ -13,6 +13,7 @@ import com.example.demo.model.TransactionLog;
 import com.example.demo.service.TransactionService;
 import jakarta.validation.Valid;
 
+@RequestMapping("/TransactionLog")
 @RestController
 public class TransactionLogController{
     @Autowired  TransactionService ser;
@@ -24,7 +25,7 @@ public class TransactionLogController{
     public List<TransactionLog> getVal(){
         return ser.getAllData2();
     }
-    @DeleteMapping("/deleted/{id}")
+    @DeleteMapping("/delete/{id}")
     public String dele(@PathVariable Long id){
         return ser.DeleteData2(id);
     }

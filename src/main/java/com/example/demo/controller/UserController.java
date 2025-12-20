@@ -13,6 +13,7 @@ import com.example.demo.model.User;
 import com.example.demo.service.UserService;
 import jakarta.validation.Valid;
 
+@RequestMapping("/User")
 @RestController
 public class UserController{
     @Autowired  UserService ser;
