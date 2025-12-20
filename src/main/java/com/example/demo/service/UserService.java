@@ -6,7 +6,7 @@ import com.example.demo.model.User;
 public interface UserService{
     User postData1(User use);
     List<User>getAllData1();
-    String  DeleteData1(int id);
-    User getData1(int id);         
-    User updateData1(int id,User entity);                                                        
+    String  DeleteData1(Long id);
+    User getData1(Long id);         
+    User updateData1(Long id,User entity);                                                        
 }
