@@ -10,13 +10,13 @@ import com.example.demo.service.UserService;
 
 @Service
 public class UserServiceImpl implements UserService{
-    @Autowired USerRepository used;
+    @Autowired UserRepository used;
     @Override
     public User postData(User use){
         return used.save(use);  
     }
     @Override
-    public List<StudentEntity>getAllData(){
+    public List<User>getAllData(){
         return student.findAll();
     }
     @Override
@@ -25,11 +25,11 @@ public class UserServiceImpl implements UserService{
         return "Deleted successfully";
     }
     @Override
-    public StudentEntity getData(int id){
+    public User getData(int id){
     return student.findById(id).orElse(null);
     }
     @Override
-    public StudentEntity updateData(int id,StudentEntity entity){
+    public User updateData(int id,USer entity){
         if(student.existsById(id)){
             entity.setId(id);
             return student.save(entity);
