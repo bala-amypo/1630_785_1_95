@@ -20,16 +20,16 @@ public class UserServiceImpl implements UserService{
         return used.findAll();
     }
     @Override
-    public String DeleteData(@PathVariable int id){
+    public String DeleteData(@PathVariable Long id){
         used.deleteById(id);
         return "Deleted successfully";
     }
     @Override
-    public User getData(int id){
+    public User getData(Long id){
     return used.findById(id).orElse(null);
     }
     @Override
-    public User updateData(int id,User entity){
+    public User updateData(Long id,User entity){
         if(used.existsById(id)){
             entity.setId(id);
             return used.save(entity);
