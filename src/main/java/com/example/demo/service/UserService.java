@@ -5,6 +5,7 @@ import com.example.demo.model.User;
 
 public interface UserService{
     User postData1(User use);
+    User postdata(User reg)
     List<User>getAllData1();
     String  DeleteData1(Long id);
     User getData1(Long id);         
