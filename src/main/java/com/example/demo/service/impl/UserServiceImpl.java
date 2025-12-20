@@ -10,6 +10,7 @@ import com.example.demo.service.UserService;
 
 @Service
 public class UserServiceImpl implements UserService{
+    
     @Autowired UserRepository used;
     @Override
     public User postData(User use){
