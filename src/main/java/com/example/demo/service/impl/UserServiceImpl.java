@@ -21,7 +21,7 @@ public class UserServiceImpl implements UserService{
         return used.findAll();
     }
     @Override
-    public String DeleteData1(@PathVariable Long id){
+    public String DeleteData1(Long id){
         used.deleteById(id);
         return "Deleted successfully";
     }
