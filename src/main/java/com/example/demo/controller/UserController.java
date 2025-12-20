@@ -25,15 +25,15 @@ public class UserController{
         return ser.getAllData1();
     }
     @DeleteMapping("/delete/{id}")
-    public String del(@PathVariable int id){
+    public String del(@PathVariable Long id){
         return ser.DeleteData1(id);
     }
     @GetMapping("/find/{id}")
-    public User find(@PathVariable int id){
+    public User find(@PathVariable Long id){
         return ser.getData1(id);
     }
     @PutMapping("/put/{id}")
-    public User putval(@PathVariable int id,@RequestBody User entity){
+    public User putval(@PathVariable Long id,@RequestBody User entity){
         return ser.updateData1(id,entity);
     }
 }
