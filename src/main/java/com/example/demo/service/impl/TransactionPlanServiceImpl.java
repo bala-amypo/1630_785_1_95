@@ -13,24 +13,24 @@ public class TransactionPlanServiceImpl implements TransactionService{
 
     @Autowired TransactionLogRepository used;
     @Override
-    public TransactionLog postData2(User use){
+    public TransactionLog postData2(TransactionLog use){
         return used.save(use);  
     }
     @Override
-    public List<>getAllData1(){
+    public List<TransactionLog>getAllData2(){
         return used.findAll();
     }
     @Override
-    public String DeleteData1(Long id){
+    public String DeleteData2(Long id){
         used.deleteById(id);
         return "Deleted successfully";
     }
     @Override
-    public User getData1(Long id){
+    public TransactionLog getData2(Long id){
     return used.findById(id).orElse(null);
     }
     @Override
-    public User updateData1(Long id,User entity){
+    public TransactionLog updateData2(Long id,TransactionLog entity){
         if(used.existsById(id)){
             entity.setId(id);
             return used.save(entity);
