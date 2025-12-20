@@ -1,7 +1,11 @@
 package com.example.model;
 
+import java
+
 @Entity
-@D
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 
 public class User{
     @Id
