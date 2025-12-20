@@ -21,7 +21,7 @@ public class UserController{
         return ser.postData1(stu);
     }
     @PostMapping("/login")
-    public User sendData(@RequestBody User log){
+    public User senddata(@RequestBody User log){
         return ser.postdata(log);
     }
     @GetMapping("/get")
