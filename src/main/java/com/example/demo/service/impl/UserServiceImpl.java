@@ -17,7 +17,9 @@ public class UserServiceImpl implements UserService{
         return used.save(use);  
     }
     @Override
-    
+    public User postdata(User log){
+        return used.save(log);
+    }
     @Override
     public List<User>getAllData1(){
         return used.findAll();

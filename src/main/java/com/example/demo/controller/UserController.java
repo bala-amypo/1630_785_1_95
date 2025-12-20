@@ -20,6 +20,10 @@ public class UserController{
     public User sendData(@RequestBody User stu){
         return ser.postData1(stu);
     }
+    @PostMapping("/login")
+    public User sendData(@RequestBody User log){
+        return ser.postdata(log);
+    }
     @GetMapping("/get")
     public List<User> getval(){
         return ser.getAllData1();
