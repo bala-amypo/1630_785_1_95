@@ -17,22 +17,22 @@ public class UserServiceImpl implements UserService{
     }
     @Override
     public List<User>getAllData(){
-        return student.findAll();
+        return used.findAll();
     }
     @Override
     public String DeleteData(@PathVariable int id){
-        student.deleteById(id);
+        used.deleteById(id);
         return "Deleted successfully";
     }
     @Override
     public User getData(int id){
-    return student.findById(id).orElse(null);
+    return used.findById(id).orElse(null);
     }
     @Override
-    public User updateData(int id,USer entity){
-        if(student.existsById(id)){
+    public User updateData(int id,User entity){
+        if(used.existsById(id)){
             entity.setId(id);
-            return student.save(entity);
+            return used.save(entity);
         } 
         return null;
     }
