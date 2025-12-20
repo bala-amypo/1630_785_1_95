@@ -17,23 +17,23 @@ import jakarta.validation.Valid;
 public class TransactionLogController{
     @Autowired  TransactionService ser;
     @PostMapping("/createcategory")
-    public TransactionLog sendData(@RequestBody TransactionLog  stu){
+    public TransactionLog senddata(@RequestBody TransactionLog  stu){
         return ser.postData2(stu);
     }
     @GetMapping("/listallcategories")
-    public List<TransactionLog> getval(){
+    public List<TransactionLog> getVal(){
         return ser.getAllData2();
     }
     @DeleteMapping("/delete/{id}")
-    public String del(@PathVariable Long id){
+    public String dele(@PathVariable Long id){
         return ser.DeleteData2(id);
     }
     @GetMapping("/find/{id}")
-    public TransactionLog  find(@PathVariable Long id){
+    public TransactionLog  Find(@PathVariable Long id){
         return ser.getData2(id);
     }
     @PutMapping("/put/{id}")
-    public TransactionLog  putval(@PathVariable Long id,@RequestBody TransactionLog  entity){
+    public TransactionLog  putVal(@PathVariable Long id,@RequestBody TransactionLog  entity){
         return ser.updateData2(id,entity);
     }
 }
