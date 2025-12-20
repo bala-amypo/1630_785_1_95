@@ -9,18 +9,18 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.PathVariable;
-import com.example.demo.model.User;
-import com.example.demo.service.UserService;
+import com.example.demo.model.TransactionLog;
+import com.example.demo.service.TransactionService;
 import jakarta.validation.Valid;
 
 @RestController
-public class UserController{
-    @Autowired  UserService ser;
-    @PostMapping("/register")
+public class TransactionLogController{
+    @Autowired  TransactionService ser;
+    @PostMapping("/createcategory")
     public User sendData(@RequestBody User stu){
         return ser.postData1(stu);
     }
-    @GetMapping("/get")
+    @GetMapping("/listallcategories")
     public List<User> getval(){
         return ser.getAllData1();
     }
