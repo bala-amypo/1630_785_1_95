@@ -24,11 +24,11 @@ public class TransactionLogController{
     public List<TransactionLog> getVal(){
         return ser.getAllData2();
     }
-    @DeleteMapping("/deleted/{id}")
+    @DeleteMapping("/delete/{id}")
     public String dele(@PathVariable Long id){
         return ser.DeleteData2(id);
     }
-    @GetMapping("/finded/{id}")
+    @GetMapping("/find/{id}")
     public TransactionLog  Find(@PathVariable Long id){
         return ser.getData2(id);
     }
