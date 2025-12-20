@@ -17,23 +17,23 @@ import jakarta.validation.Valid;
 public class UserController{
     @Autowired  UserService ser;
     @PostMapping("/post")
-    public StudentEntity sendData(@RequestBody StudentEntity stu){
-        return ser.postData(stu);
+    public User sendData(@RequestBody User stu){
+        return ser.postData1(stu);
     }
     @GetMapping("/get")
-    public List<StudentEntity> getval(){
-        return ser.getAllData();
+    public List<User> getval(){
+        return ser.getAllData1();
     }
     @DeleteMapping("/delete/{id}")
     public String del(@PathVariable int id){
-        return ser.DeleteData(id);
+        return ser.DeleteData1(id);
     }
     @GetMapping("/find/{id}")
-    public StudentEntity find(@PathVariable int id){
-        return ser.getData(id);
+    public User find(@PathVariable int id){
+        return ser.getData1(id);
     }
     @PutMapping("/put/{id}")
-    public StudentEntity putval(@PathVariable int id,@RequestBody StudentEntity entity){
-        return ser.updateData(id,entity);
+    public User putval(@PathVariable int id,@RequestBody User entity){
+        return ser.updateData1(id,entity);
     }
 }
