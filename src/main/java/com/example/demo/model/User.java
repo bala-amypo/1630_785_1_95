@@ -1,26 +1,38 @@
 package com.example.demo.model;
 
-import jakarta.persistance.*;
-import jakarta.persistance.Entity;
-import jakarta.persistance.GeneratedValue;
-import jakarta.persistance.GenerationType;
-import jakarta.persistance.Id;
-import jakarta.persistance.Column;
-import lombok.Data;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
+public class User {
 
-public class User{
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
-    private Long id;
-    private String name;
-    @Column(unique = true)
-    private String email;
-    private String role;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;   
+
+    @Column(nullable = false)
+    private String name;   
+
+    @Column(nullable = false, unique = true)
+    private String email; 
+
+    @Column(nullable = false)
+    private String password;  
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private Role role;   // USER / ADMIN
 }
