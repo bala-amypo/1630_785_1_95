@@ -4,7 +4,7 @@ import java.util.List;
 import com.example.demo.model.Category;
 
 public interface CategoryService{
-    Category postData2(Category use);
+    Category postData3(Category use);
     List<Category>getAllData2();
     String  DeleteData2(Long id);
     Category getData2(Long id);         
