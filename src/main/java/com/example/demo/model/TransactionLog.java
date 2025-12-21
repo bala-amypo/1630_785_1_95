@@ -1,15 +1,18 @@
 package com.example.demo.model;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PastOrPresent;
 import jakarta.validation.constraints.Positive;
@@ -26,16 +29,16 @@ public class TransactionLog {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;   // PRIMARY KEY
+    private Long id;
 
+    @NotNull
     @Positive(message = "Amount must be greater than 0")
-    @NotNull
-    @Column(nullable = false)
-    private Double amount;   // > 0
+    @Column(nullable = false, precision = 12, scale = 2)
+    private BigDecimal amount;
 
-    @NotNull
+    @NotBlank(message = "Description cannot be blank")
     @Column(nullable = false)
-    private String description;   // NOT NULL
+    private String description;
 
     @NotNull
     @PastOrPresent(message = "Transaction date cannot be in the future")
@@ -43,12 +46,14 @@ public class TransactionLog {
     private LocalDate transactionDate;
 
     // 🔗 Many Transactions → One User
-    @ManyToOne
+    @NotNull
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
     // 🔗 Many Transactions → One Category
-    @ManyToOne
+    @NotNull
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id", nullable = false)
     private Category category;
 }
