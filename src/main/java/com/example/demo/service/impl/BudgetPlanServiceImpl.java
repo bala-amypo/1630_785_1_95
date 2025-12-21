@@ -30,7 +30,7 @@ public class BudgetPlanServiceImpl implements BudgetPlanService{
     return used.findById(id).orElse(null);
     }
     @Override
-    public BudgetPlan updateData4(Long id,BudgetPlan entity){
+    public BudgetPlan updateData5(Long id,BudgetPlan entity){
         if(used.existsById(id)){
             entity.setId(id);
             return used.save(entity);
