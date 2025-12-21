@@ -1,12 +1,12 @@
 package com.example.demo.service;
 
 import java.util.List;
-import com.example.demo.model.TransactionLog;
+import com.example.demo.model.Category;
 
 public interface TransactionService{
-    TransactionLog postData2(TransactionLog use);
-    List<TransactionLog>getAllData2();
+    Category postData2(Category use);
+    List<Category>getAllData2();
     String  DeleteData2(Long id);
-    TransactionLog getData2(Long id);         
-    TransactionLog updateData2(Long id,TransactionLog entity);                                                        
+    Category getData2(Long id);         
+    Category updateData2(Long id,TransactionLog entity);                                                        
 }
