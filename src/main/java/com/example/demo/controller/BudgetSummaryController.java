@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import com.example.demo.model.BudgetSummary;
-import com.example.demo.service.BudgetSummary;
+import com.example.demo.service.BudgetSummaryService;
 import jakarta.validation.Valid;
 
 @RequestMapping("/BudgetSummary")
