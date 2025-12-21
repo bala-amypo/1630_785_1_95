@@ -27,7 +27,7 @@ public class BudgetPlan {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    // 🔗 Many budgets → One user
+    //Many budgets → One user
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
