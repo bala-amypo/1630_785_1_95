@@ -17,20 +17,20 @@ public class CategoryServiceImpl implements CategoryService{
         return used.save(use);  
     }
     @Override
-    public List<TransactionLog>getAllData3(){
+    public List<Category>getAllData3(){
         return used.findAll();
     }
     @Override
-    public String DeleteData2(Long id){
+    public String DeleteData3(Long id){
         used.deleteById(id);
         return "Deleted successfully";
     }
     @Override
-    public TransactionLog getData2(Long id){
+    public Category getData3(Long id){
     return used.findById(id).orElse(null);
     }
     @Override
-    public TransactionLog updateData2(Long id,TransactionLog entity){
+    public Category updateData3(Long id,Category entity){
         if(used.existsById(id)){
             entity.setId(id);
             return used.save(entity);
