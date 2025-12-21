@@ -7,6 +7,6 @@ public interface BudgetSummaryService{
     BudgetSummary postData4(BudgetSummary use);
     List<BudgetSummary>getAllData4();
     String  DeleteData4(Long id);
-    BudgetSummary getData3(Long id);         
-    BudgetSummary updateData3(Long id,BudgetSummary entity);                                                        
+    BudgetSummary getData4(Long id);         
+    BudgetSummary updateData4(Long id,BudgetSummary entity);                                                        
 }
