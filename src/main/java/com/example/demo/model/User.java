@@ -34,5 +34,5 @@ public class User {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private Role role;   // USER / ADMIN
+    private Role role = Role.USER;   // USER / ADMIN
 }
