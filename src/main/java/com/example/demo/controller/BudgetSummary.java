@@ -18,11 +18,11 @@ import jakarta.validation.Valid;
 @RestController
 public class BudgetSummaryController{
     @Autowired  BudgetSummaryService ser;
-    @PostMapping("/addtransaction")
+    @PostMapping("/createbudgetplan")
     public BudgetSummary senddata(@RequestBody BudgetSummary  stu){
         return ser.postData4(stu);
     }
-    @GetMapping("/gettransaction")
+    @GetMapping("/getaspecificplan")
     public List<BudgetSummary> getVal(){
         return ser.getAllData4();
     }
@@ -35,7 +35,7 @@ public class BudgetSummaryController{
         return ser.getData4(id);
     }
     @PutMapping("/put/{id}")
-    public Category  putVal(@PathVariable Long id,@RequestBody Category entity){
-        return ser.updateData3(id,entity);
+    public BudgetSummary  putVal(@PathVariable Long id,@RequestBody BudgetSummary entity){
+        return ser.updateData4(id,entity);
     }
 }
