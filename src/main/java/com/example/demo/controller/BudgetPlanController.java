@@ -19,23 +19,23 @@ import jakarta.validation.Valid;
 public class BudgetPlanController{
     @Autowired  BudgetPlanService ser;
     @PostMapping("/createbudgetplan")
-    public BudgetSummary senddata(@RequestBody BudgetSummary  stu){
-        return ser.postData4(stu);
+    public BudgetPlan senddata(@RequestBody BudgetPlan  stu){
+        return ser.postData5(stu);
     }
     @GetMapping("/getaspecificplan")
-    public List<BudgetSummary> getVal(){
-        return ser.getAllData4();
+    public List<BudgetPlan> getVal(){
+        return ser.getAllData5();
     }
     @DeleteMapping("/delete/{id}")
     public String dele(@PathVariable Long id){
-        return ser.DeleteData4(id);
+        return ser.DeleteData5(id);
     }
     @GetMapping("/find/{id}")
-    public BudgetSummary  Find(@PathVariable Long id){
-        return ser.getData4(id);
+    public BudgetPlan  Find(@PathVariable Long id){
+        return ser.getData5(id);
     }
     @PutMapping("/put/{id}")
-    public BudgetSummary  putVal(@PathVariable Long id,@RequestBody BudgetSummary entity){
-        return ser.updateData4(id,entity);
+    public BudgetPlan  putVal(@PathVariable Long id,@RequestBody BudgetPlan entity){
+        return ser.updateData5(id,entity);
     }
 }
