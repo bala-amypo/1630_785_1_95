@@ -13,24 +13,24 @@ public class BudgetPlanServiceImpl implements BudgetPlanService{
 
     @Autowired BudgetPlanRepository used;
     @Override
-    public BudgetSummary postData4(BudgetSummary use){
+    public BudgetPlan postData5(BudgetPlan use){
         return used.save(use);  
     }
     @Override
-    public List<BudgetSummary>getAllData4(){
+    public List<BudgetPlan>getAllData5(){
         return used.findAll();
     }
     @Override
-    public String DeleteData4(Long id){
+    public String DeleteData5(Long id){
         used.deleteById(id);
         return "Deleted successfully";
     }
     @Override
-    public BudgetSummary getData4(Long id){
+    public BudgetPlan getData5(Long id){
     return used.findById(id).orElse(null);
     }
     @Override
-    public BudgetSummary updateData4(Long id,BudgetSummary entity){
+    public BudgetPlan updateData4(Long id,BudgetPlan entity){
         if(used.existsById(id)){
             entity.setId(id);
             return used.save(entity);
