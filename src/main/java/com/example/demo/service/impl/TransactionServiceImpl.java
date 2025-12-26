@@ -1,48 +1,34 @@
 package com.example.demo.service.impl;
 
-import com.example.demo.exception.BadRequestException;
-import com.example.demo.model.TransactionLog;
-import com.example.demo.model.User;
-import com.example.demo.repository.TransactionLogRepository;
-import com.example.demo.repository.UserRepository;
+import com.example.demo.model.*;
+import com.example.demo.repository.*;
 import com.example.demo.service.TransactionService;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
-import java.time.LocalDate;
-import java.time.YearMonth;
+
 import java.util.List;
 
-@Service
-@RequiredArgsConstructor
 public class TransactionServiceImpl implements TransactionService {
-    private final TransactionLogRepository transactionRepo;
-    private final UserRepository userRepository;
 
-    @Override
+    private final TransactionLogRepository repo;
+    private final UserRepository userRepo;
+
+    public TransactionServiceImpl(TransactionLogRepository repo, UserRepository userRepo) {
+        this.repo = repo;
+        this.userRepo = userRepo;
+    }
+
     public TransactionLog addTransaction(Long userId, TransactionLog log) {
-        User user = userRepository.findById(userId)
-                .orElseThrow(() -> new BadRequestException("User not found"));
-        log.setUser(user);
+        User u = userRepo.findById(userId).orElseThrow();
+        log.setUser(u);
         log.validate();
-        return transactionRepo.save(log);
+        return repo.save(log);
     }
 
-    @Override
     public List<TransactionLog> getUserTransactions(Long userId) {
-        User user = userRepository.findById(userId)
-                .orElseThrow(() -> new BadRequestException("User not found"));
-        return transactionRepo.findByUser(user);
-    }
-
-    @Override
-    public List<TransactionLog> getTransactionsByMonth(Long userId, int month, int year) {
-        User user = userRepository.findById(userId)
-                .orElseThrow(() -> new BadRequestException("User not found"));
-        YearMonth ym = YearMonth.of(year, month);
-        return transactionRepo.findByUserAndTransactionDateBetween(
-                user, ym.atDay(1), ym.atEndOfMonth());
+        User u = userRepo.findById(userId).orElseThrow();
+        return repo.findByUser(u);
     }
 }
+
 
 
 

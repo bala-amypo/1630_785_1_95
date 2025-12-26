@@ -4,35 +4,30 @@ import com.example.demo.exception.BadRequestException;
 import com.example.demo.model.Category;
 import com.example.demo.repository.CategoryRepository;
 import com.example.demo.service.CategoryService;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
+
 import java.util.List;
 
-@Service
-@RequiredArgsConstructor
 public class CategoryServiceImpl implements CategoryService {
-    private final CategoryRepository categoryRepository;
 
-    @Override
-    public Category addCategory(Category category) {
-        if (categoryRepository.existsByName(category.getName())) {
-            throw new BadRequestException("Category already exists");
+    private final CategoryRepository repo;
+
+    public CategoryServiceImpl(CategoryRepository repo) {
+        this.repo = repo;
+    }
+
+    public Category addCategory(Category c) {
+        if (repo.existsByName(c.getName())) {
+            throw new BadRequestException("Duplicate category");
         }
-        category.validateType();
-        return categoryRepository.save(category);
+        c.validateType();
+        return repo.save(c);
     }
 
-    @Override
     public List<Category> getAllCategories() {
-        return categoryRepository.findAll();
-    }
-
-    @Override
-    public Category getCategoryById(Long id) {
-        return categoryRepository.findById(id)
-                .orElseThrow(() -> new BadRequestException("Category not found"));
+        return repo.findAll();
     }
 }
+
 
 
 
