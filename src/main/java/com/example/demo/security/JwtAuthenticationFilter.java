@@ -15,10 +15,10 @@ import java.util.Collections;
 
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
-    private final JwtToken jwtToken;
+    private final JwtTokenProvider jwtTokenProvider;
 
-    public JwtAuthenticationFilter(JwtToken jwtToken) {
-        this.jwtToken = jwtToken;
+    public JwtAuthenticationFilter(JwtTokenProvider jwtTokenProvider) {
+        this.jwtTokenProvider = jwtTokenProvider;
     }
 
     @Override
@@ -32,17 +32,23 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         if (header != null && header.startsWith("Bearer ")) {
             String token = header.substring(7);
 
-            if (jwtToken.validateToken(token)) {
-                String username = jwtToken.getUsername(token);
+            if (jwtTokenProvider.validateToken(token)) {
+                String username =
+                        jwtTokenProvider.getUsernameFromToken(token);
 
-                UsernamePasswordAuthenticationToken auth =
+                UsernamePasswordAuthenticationToken authentication =
                         new UsernamePasswordAuthenticationToken(
-                                username, null, Collections.emptyList());
+                                username,
+                                null,
+                                Collections.emptyList()
+                        );
 
-                auth.setDetails(
-                        new WebAuthenticationDetailsSource().buildDetails(request));
+                authentication.setDetails(
+                        new WebAuthenticationDetailsSource()
+                                .buildDetails(request));
 
-                SecurityContextHolder.getContext().setAuthentication(auth);
+                SecurityContextHolder.getContext()
+                        .setAuthentication(authentication);
             }
         }
 
