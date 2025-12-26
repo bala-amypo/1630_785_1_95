@@ -6,33 +6,16 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;
 
-public interface BudgetPlanRepository extends JpaRepository<BudgetPlan, Long> {
-    Optional<BudgetPlan> findByUserAndMonthAndYear(User user, Integer month, Integer year);
+import org.springframework.stereotype.Repository;
+
+@Repository
+
+public interface BudgetPlanRepository
+        extends JpaRepository<BudgetPlan, Long> {
+
+    Optional<BudgetPlan> findByUserAndMonthAndYear(
+            User user,
+            Integer month,
+            Integer year
+    );
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// package com.example.demo.repository;
-
-// import org.springframework.data.jpa.repository.JpaRepository;
-// import org.springframework.stereotype.Repository;
-// import com.example.demo.model.BudgetPlan;
-
-// @Repository
-// public interface BudgetPlanRepository extends JpaRepository<BudgetPlan,Long>{
-    
-// }
