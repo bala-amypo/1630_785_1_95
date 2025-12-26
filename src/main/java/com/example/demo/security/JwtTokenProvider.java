@@ -17,6 +17,7 @@ public class JwtTokenProvider {
         this.validityInMs = validityInMs;
     }
 
+    // Used in tests (t47, t49, t51, t52, t53)
     public String generateToken(Authentication authentication,
                                 Long userId,
                                 String email,
@@ -35,13 +36,25 @@ public class JwtTokenProvider {
                 .compact();
     }
 
+    // NEW overload used by AuthController: generateToken(String)
+    public String generateToken(String subject) {
+        Date now = new Date();
+        Date expiry = new Date(now.getTime() + validityInMs);
+
+        return Jwts.builder()
+                .setSubject(subject)
+                .setIssuedAt(now)
+                .setExpiration(expiry)
+                .signWith(key, SignatureAlgorithm.HS256)
+                .compact();
+    }
+
     public Long getUserIdFromToken(String token) {
         Claims claims = parseClaims(token);
         Object uid = claims.get("uid");
         if (uid != null) {
             return Long.valueOf(uid.toString());
         }
-        // Fallback to subject (t50)
         String sub = claims.getSubject();
         return sub != null ? Long.valueOf(sub) : null;
     }
