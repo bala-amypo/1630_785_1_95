@@ -1,31 +1,36 @@
 package com.example.demo.service.impl;
 
-import com.example.demo.model.*;
-import com.example.demo.repository.*;
+import com.example.demo.model.TransactionLog;
+import com.example.demo.model.User;
+import com.example.demo.repository.TransactionLogRepository;
+import com.example.demo.repository.UserRepository;
 import com.example.demo.service.TransactionService;
 
 import java.util.List;
 
 public class TransactionServiceImpl implements TransactionService {
 
-    private final TransactionLogRepository repo;
-    private final UserRepository userRepo;
+    private final TransactionLogRepository transactionLogRepository;
+    private final UserRepository userRepository;
 
-    public TransactionServiceImpl(TransactionLogRepository repo, UserRepository userRepo) {
-        this.repo = repo;
-        this.userRepo = userRepo;
+    public TransactionServiceImpl(TransactionLogRepository transactionLogRepository,
+                                  UserRepository userRepository) {
+        this.transactionLogRepository = transactionLogRepository;
+        this.userRepository = userRepository;
     }
 
+    @Override
     public TransactionLog addTransaction(Long userId, TransactionLog log) {
-        User u = userRepo.findById(userId).orElseThrow();
-        log.setUser(u);
+        User user = userRepository.findById(userId).orElseThrow();
+        log.setUser(user);
         log.validate();
-        return repo.save(log);
+        return transactionLogRepository.save(log);
     }
 
+    @Override
     public List<TransactionLog> getUserTransactions(Long userId) {
-        User u = userRepo.findById(userId).orElseThrow();
-        return repo.findByUser(u);
+        User user = userRepository.findById(userId).orElseThrow();
+        return transactionLogRepository.findByUser(user);
     }
 }
 

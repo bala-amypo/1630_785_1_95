@@ -9,24 +9,27 @@ import java.util.List;
 
 public class CategoryServiceImpl implements CategoryService {
 
-    private final CategoryRepository repo;
+    private final CategoryRepository categoryRepository;
 
-    public CategoryServiceImpl(CategoryRepository repo) {
-        this.repo = repo;
+    public CategoryServiceImpl(CategoryRepository categoryRepository) {
+        this.categoryRepository = categoryRepository;
     }
 
-    public Category addCategory(Category c) {
-        if (repo.existsByName(c.getName())) {
+    @Override
+    public Category addCategory(Category category) {
+        if (categoryRepository.existsByName(category.getName())) {
             throw new BadRequestException("Duplicate category");
         }
-        c.validateType();
-        return repo.save(c);
+        category.validateType();
+        return categoryRepository.save(category);
     }
 
+    @Override
     public List<Category> getAllCategories() {
-        return repo.findAll();
+        return categoryRepository.findAll();
     }
 }
+
 
 
 

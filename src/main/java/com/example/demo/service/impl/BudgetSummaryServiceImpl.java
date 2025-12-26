@@ -3,51 +3,66 @@ package com.example.demo.service.impl;
 import com.example.demo.model.*;
 import com.example.demo.repository.*;
 import com.example.demo.service.BudgetSummaryService;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
+
+import java.time.LocalDate;
 import java.time.YearMonth;
 import java.util.List;
 
-@Service
-@RequiredArgsConstructor
 public class BudgetSummaryServiceImpl implements BudgetSummaryService {
-    private final BudgetSummaryRepository summaryRepo;
-    private final BudgetPlanRepository planRepo;
-    private final TransactionLogRepository transactionRepo;
 
-    @Override
-    public BudgetSummary generateSummary(Long userId, int month, int year) {
-        BudgetPlan plan = planRepo.findByUserAndMonthAndYear(new User(userId, null, null, null, null), month, year)
-                .orElseThrow(() -> new RuntimeException("Plan not found"));
+    private final BudgetSummaryRepository summaryRepository;
+    private final BudgetPlanRepository planRepository;
+    private final TransactionLogRepository transactionRepository;
 
-        YearMonth ym = YearMonth.of(year, month);
-        List<TransactionLog> logs = transactionRepo.findByUserAndTransactionDateBetween(
-                plan.getUser(), ym.atDay(1), ym.atEndOfMonth());
-
-        double income = logs.stream()
-                .filter(l -> l.getCategory().getType().equals(Category.TYPE_INCOME))
-                .mapToDouble(TransactionLog::getAmount).sum();
-        
-        double expense = logs.stream()
-                .filter(l -> l.getCategory().getType().equals(Category.TYPE_EXPENSE))
-                .mapToDouble(TransactionLog::getAmount).sum();
-
-        BudgetSummary summary = new BudgetSummary();
-        summary.setBudgetPlan(plan);
-        summary.setTotalIncome(income);
-        summary.setTotalExpense(expense);
-        summary.setStatus(expense > plan.getExpenseLimit() ? 
-                BudgetSummary.STATUS_EXCEEDED : BudgetSummary.STATUS_UNDER_LIMIT);
-
-        return summaryRepo.save(summary);
+    public BudgetSummaryServiceImpl(BudgetSummaryRepository summaryRepository,
+                                    BudgetPlanRepository planRepository,
+                                    TransactionLogRepository transactionRepository) {
+        this.summaryRepository = summaryRepository;
+        this.planRepository = planRepository;
+        this.transactionRepository = transactionRepository;
     }
 
     @Override
-    public BudgetSummary getSummaryByPlan(Long planId) {
-        return summaryRepo.findByBudgetPlan(new BudgetPlan(planId, null, null, null, null, null))
-                .orElseThrow(() -> new RuntimeException("Summary not found"));
+    public BudgetSummary generateSummary(Long budgetPlanId) {
+        BudgetPlan plan = planRepository.findById(budgetPlanId).orElseThrow();
+
+        YearMonth ym = YearMonth.of(plan.getYear(), plan.getMonth());
+        LocalDate start = ym.atDay(1);
+        LocalDate end = ym.atEndOfMonth();
+
+        List<TransactionLog> logs =
+                transactionRepository.findByUserAndTransactionDateBetween(
+                        plan.getUser(), start, end);
+
+        double income = 0;
+        double expense = 0;
+
+        for (TransactionLog log : logs) {
+            if (Category.TYPE_INCOME.equals(log.getCategory().getType())) {
+                income += log.getAmount();
+            } else {
+                expense += log.getAmount();
+            }
+        }
+
+        String status = expense <= plan.getExpenseLimit()
+                ? BudgetSummary.STATUS_UNDER_LIMIT
+                : BudgetSummary.STATUS_OVER_LIMIT;
+
+        BudgetSummary summary = new BudgetSummary(
+                null, plan, income, expense, status, null
+        );
+
+        return summaryRepository.save(summary);
+    }
+
+    @Override
+    public BudgetSummary getSummary(Long budgetPlanId) {
+        BudgetPlan plan = planRepository.findById(budgetPlanId).orElseThrow();
+        return summaryRepository.findByBudgetPlan(plan).orElse(null);
     }
 }
+
 
 
 

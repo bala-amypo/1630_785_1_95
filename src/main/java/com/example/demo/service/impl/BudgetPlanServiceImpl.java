@@ -6,42 +6,39 @@ import com.example.demo.model.User;
 import com.example.demo.repository.BudgetPlanRepository;
 import com.example.demo.repository.UserRepository;
 import com.example.demo.service.BudgetPlanService;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
 
-@Service
-@RequiredArgsConstructor
 public class BudgetPlanServiceImpl implements BudgetPlanService {
-    private final BudgetPlanRepository planRepo;
-    private final UserRepository userRepo;
+
+    private final BudgetPlanRepository budgetPlanRepository;
+    private final UserRepository userRepository;
+
+    public BudgetPlanServiceImpl(BudgetPlanRepository budgetPlanRepository,
+                                 UserRepository userRepository) {
+        this.budgetPlanRepository = budgetPlanRepository;
+        this.userRepository = userRepository;
+    }
 
     @Override
     public BudgetPlan createBudgetPlan(Long userId, BudgetPlan plan) {
-        User user = userRepo.findById(userId)
-                .orElseThrow(() -> new BadRequestException("User not found"));
-        if (planRepo.findByUserAndMonthAndYear(user, plan.getMonth(), plan.getYear()).isPresent()) {
-            throw new BadRequestException("Plan already exists for this period");
-        }
+        User user = userRepository.findById(userId).orElseThrow();
         plan.setUser(user);
         plan.validate();
-        return planRepo.save(plan);
+
+        if (budgetPlanRepository
+                .findByUserAndMonthAndYear(user, plan.getMonth(), plan.getYear())
+                .isPresent()) {
+            throw new BadRequestException("Budget plan already exists");
+        }
+
+        return budgetPlanRepository.save(plan);
     }
 
     @Override
-    public BudgetPlan getBudgetPlan(Long userId, int month, int year) {
-        User user = userRepo.findById(userId)
-                .orElseThrow(() -> new BadRequestException("User not found"));
-        return planRepo.findByUserAndMonthAndYear(user, month, year)
-                .orElseThrow(() -> new BadRequestException("Budget plan not found"));
-    }
-
-    @Override
-    public BudgetPlan updateBudgetPlan(Long planId, BudgetPlan updatedPlan) {
-        BudgetPlan existing = planRepo.findById(planId)
-                .orElseThrow(() -> new BadRequestException("Plan not found"));
-        existing.setExpenseLimit(updatedPlan.getExpenseLimit());
-        existing.setExpectedIncome(updatedPlan.getExpectedIncome());
-        return planRepo.save(existing);
+    public BudgetPlan getBudgetPlan(Long userId, Integer month, Integer year) {
+        User user = userRepository.findById(userId).orElseThrow();
+        return budgetPlanRepository
+                .findByUserAndMonthAndYear(user, month, year)
+                .orElse(null);
     }
 }
 
