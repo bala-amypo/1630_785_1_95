@@ -1,67 +1,37 @@
 package com.example.demo.service.impl;
 
-import com.example.demo.model.*;
-import com.example.demo.repository.*;
+import com.example.demo.model.BudgetSummary;
+import com.example.demo.repository.BudgetSummaryRepository;
 import com.example.demo.service.BudgetSummaryService;
+import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
-import java.time.YearMonth;
 import java.util.List;
 
+@Service
 public class BudgetSummaryServiceImpl implements BudgetSummaryService {
 
-    private final BudgetSummaryRepository summaryRepository;
-    private final BudgetPlanRepository planRepository;
-    private final TransactionLogRepository transactionRepository;
+    private final BudgetSummaryRepository budgetSummaryRepository;
 
-    public BudgetSummaryServiceImpl(BudgetSummaryRepository summaryRepository,
-                                    BudgetPlanRepository planRepository,
-                                    TransactionLogRepository transactionRepository) {
-        this.summaryRepository = summaryRepository;
-        this.planRepository = planRepository;
-        this.transactionRepository = transactionRepository;
+    public BudgetSummaryServiceImpl(BudgetSummaryRepository budgetSummaryRepository) {
+        this.budgetSummaryRepository = budgetSummaryRepository;
     }
 
     @Override
-    public BudgetSummary generateSummary(Long budgetPlanId) {
-        BudgetPlan plan = planRepository.findById(budgetPlanId).orElseThrow();
-
-        YearMonth ym = YearMonth.of(plan.getYear(), plan.getMonth());
-        LocalDate start = ym.atDay(1);
-        LocalDate end = ym.atEndOfMonth();
-
-        List<TransactionLog> logs =
-                transactionRepository.findByUserAndTransactionDateBetween(
-                        plan.getUser(), start, end);
-
-        double income = 0;
-        double expense = 0;
-
-        for (TransactionLog log : logs) {
-            if (Category.TYPE_INCOME.equals(log.getCategory().getType())) {
-                income += log.getAmount();
-            } else {
-                expense += log.getAmount();
-            }
-        }
-
-        String status = expense <= plan.getExpenseLimit()
-                ? BudgetSummary.STATUS_UNDER_LIMIT
-                : BudgetSummary.STATUS_OVER_LIMIT;
-
-        BudgetSummary summary = new BudgetSummary(
-                null, plan, income, expense, status, null
-        );
-
-        return summaryRepository.save(summary);
+    public BudgetSummary createBudgetSummary(BudgetSummary summary) {
+        return budgetSummaryRepository.save(summary);
     }
 
     @Override
-    public BudgetSummary getSummary(Long budgetPlanId) {
-        BudgetPlan plan = planRepository.findById(budgetPlanId).orElseThrow();
-        return summaryRepository.findByBudgetPlan(plan).orElse(null);
+    public List<BudgetSummary> getAllBudgetSummaries() {
+        return budgetSummaryRepository.findAll();
+    }
+
+    @Override
+    public BudgetSummary getBudgetSummaryById(Long id) {
+        return budgetSummaryRepository.findById(id).orElse(null);
     }
 }
+
 
 
 

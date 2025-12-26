@@ -1,13 +1,14 @@
 package com.example.demo.service;
 
 import com.example.demo.model.BudgetSummary;
+import java.util.List;
 
 public interface BudgetSummaryService {
-
-    BudgetSummary generateSummary(Long budgetPlanId);
-
-    BudgetSummary getSummary(Long budgetPlanId);
+    BudgetSummary createBudgetSummary(BudgetSummary summary);
+    List<BudgetSummary> getAllBudgetSummaries();
+    BudgetSummary getBudgetSummaryById(Long id);
 }
+
 
 
 
