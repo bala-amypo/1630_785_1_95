@@ -1,3 +1,30 @@
+package com.example.demo.controller;
+
+import com.example.demo.model.BudgetSummary;
+import com.example.demo.service.BudgetSummaryService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+@RestController
+@RequestMapping("/api/summaries")
+@RequiredArgsConstructor
+public class BudgetSummaryController {
+    private final BudgetSummaryService budgetSummaryService;
+
+    @GetMapping("/user/{userId}/{month}/{year}")
+    public ResponseEntity<BudgetSummary> getSummary(@PathVariable Long userId, @PathVariable int month, @PathVariable int year) {
+        return ResponseEntity.ok(budgetSummaryService.generateSummary(userId, month, year));
+    }
+}
+
+
+
+
+
+
+
+
 // package com.example.demo.controller;
 
 // import java.util.*;

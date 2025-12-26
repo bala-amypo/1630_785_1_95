@@ -1,3 +1,38 @@
+package com.example.demo.controller;
+
+import com.example.demo.model.BudgetPlan;
+import com.example.demo.service.BudgetPlanService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+@RestController
+@RequestMapping("/api/budgets")
+@RequiredArgsConstructor
+public class BudgetPlanController {
+    private final BudgetPlanService budgetPlanService;
+
+    @PostMapping("/user/{userId}")
+    public ResponseEntity<BudgetPlan> createPlan(@PathVariable Long userId, @RequestBody BudgetPlan plan) {
+        return ResponseEntity.ok(budgetPlanService.createBudgetPlan(userId, plan));
+    }
+
+    @GetMapping("/user/{userId}/{month}/{year}")
+    public ResponseEntity<BudgetPlan> getPlan(@PathVariable Long userId, @PathVariable int month, @PathVariable int year) {
+        return ResponseEntity.ok(budgetPlanService.getBudgetPlan(userId, month, year));
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
 // package com.example.demo.controller;
 
 // import java.util.*;
