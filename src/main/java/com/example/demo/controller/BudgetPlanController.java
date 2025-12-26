@@ -2,26 +2,35 @@ package com.example.demo.controller;
 
 import com.example.demo.model.BudgetPlan;
 import com.example.demo.service.BudgetPlanService;
-import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
+
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/budgets")
-@RequiredArgsConstructor
+@RequestMapping("/budget-plans")
 public class BudgetPlanController {
+
     private final BudgetPlanService budgetPlanService;
 
-    @PostMapping("/user/{userId}")
-    public ResponseEntity<BudgetPlan> createPlan(@PathVariable Long userId, @RequestBody BudgetPlan plan) {
-        return ResponseEntity.ok(budgetPlanService.createBudgetPlan(userId, plan));
+    public BudgetPlanController(BudgetPlanService budgetPlanService) {
+        this.budgetPlanService = budgetPlanService;
     }
 
-    @GetMapping("/user/{userId}/{month}/{year}")
-    public ResponseEntity<BudgetPlan> getPlan(@PathVariable Long userId, @PathVariable int month, @PathVariable int year) {
-        return ResponseEntity.ok(budgetPlanService.getBudgetPlan(userId, month, year));
+    @PostMapping("/{userId}")
+    public BudgetPlan createPlan(
+            @PathVariable Long userId,
+            @RequestBody BudgetPlan plan) {
+        return budgetPlanService.createBudgetPlan(userId, plan);
+    }
+
+    @GetMapping("/{userId}")
+    public BudgetPlan getPlan(
+            @PathVariable Long userId,
+            @RequestParam Integer month,
+            @RequestParam Integer year) {
+        return budgetPlanService.getBudgetPlan(userId, month, year);
     }
 }
+
 
 
 

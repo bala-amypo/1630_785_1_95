@@ -2,28 +2,35 @@ package com.example.demo.controller;
 
 import com.example.demo.model.TransactionLog;
 import com.example.demo.service.TransactionService;
-import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
+
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/transactions")
-@RequiredArgsConstructor
+@RequestMapping("/transactions")
 public class TransactionController {
+
     private final TransactionService transactionService;
 
-    @PostMapping("/user/{userId}")
-    public ResponseEntity<TransactionLog> addTransaction(@PathVariable Long userId, @RequestBody TransactionLog log) {
-        return ResponseEntity.ok(transactionService.addTransaction(userId, log));
+    public TransactionController(TransactionService transactionService) {
+        this.transactionService = transactionService;
     }
 
-    @GetMapping("/user/{userId}")
-    public ResponseEntity<List<TransactionLog>> getUserTransactions(@PathVariable Long userId) {
-        return ResponseEntity.ok(transactionService.getUserTransactions(userId));
+    @PostMapping("/{userId}")
+    public TransactionLog addTransaction(
+            @PathVariable Long userId,
+            @RequestBody TransactionLog log) {
+        return transactionService.addTransaction(userId, log);
+    }
+
+    @GetMapping("/{userId}")
+    public List<TransactionLog> getUserTransactions(
+            @PathVariable Long userId) {
+        return transactionService.getUserTransactions(userId);
     }
 }
+
 
 
 
