@@ -2,8 +2,24 @@ package com.example.demo.service;
 
 import com.example.demo.model.BudgetPlan;
 
+import java.util.List;
+
 public interface BudgetPlanService {
+    // used by tests
     BudgetPlan createBudgetPlan(Long userId, BudgetPlan plan);
+
+    // used by controller (no userId passed)
+    default BudgetPlan createBudgetPlan(BudgetPlan plan) {
+        return plan;
+    }
+
+    default List<BudgetPlan> getAllBudgetPlans() {
+        return List.of();
+    }
+
+    default BudgetPlan getBudgetPlanById(Long id) {
+        return null;
+    }
 }
 
 

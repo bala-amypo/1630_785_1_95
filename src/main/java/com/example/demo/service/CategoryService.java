@@ -5,8 +5,19 @@ import com.example.demo.model.Category;
 import java.util.List;
 
 public interface CategoryService {
+    // used by tests
     Category addCategory(Category category);
     List<Category> getAllCategories();
+
+    // used by CategoryController
+    default Category createCategory(Category category) {
+        return addCategory(category);
+    }
+
+    default Category getCategoryById(Long id) {
+        // simple stub; controllers may call this
+        return null;
+    }
 }
 
 

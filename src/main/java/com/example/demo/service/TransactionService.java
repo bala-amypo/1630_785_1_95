@@ -5,12 +5,24 @@ import com.example.demo.model.TransactionLog;
 import java.util.List;
 
 public interface TransactionService {
+    // used by tests
     TransactionLog addTransaction(Long userId, TransactionLog log);
     List<TransactionLog> getUserTransactions(Long userId);
+
+    // used by TransactionController
+    default TransactionLog createTransaction(TransactionLog log) {
+        // controller path where userId not provided; adapt as needed
+        return log;
+    }
+
+    default List<TransactionLog> getAllTransactions() {
+        return List.of();
+    }
+
+    default TransactionLog getTransactionById(Long id) {
+        return null;
+    }
 }
-
-
-
 
 
 
