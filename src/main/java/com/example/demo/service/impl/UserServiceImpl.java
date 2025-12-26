@@ -20,24 +20,13 @@ public class UserServiceImpl implements UserService {
     @Override
     public User register(User user) {
         if (userRepository.existsByEmail(user.getEmail())) {
-            throw new BadRequestException("Email already exists");
+            throw new BadRequestException("Email already in use");
         }
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        if (user.getRole() == null) {
-            user.setRole(User.ROLE_USER);
-        }
         return userRepository.save(user);
     }
-
-    @Override
-    public User findByEmail(String email) {
-        return userRepository.findAll()
-                .stream()
-                .filter(u -> u.getEmail().equals(email))
-                .findFirst()
-                .orElse(null);
-    }
 }
+
 
 
 

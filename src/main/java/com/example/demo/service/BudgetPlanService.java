@@ -1,13 +1,11 @@
 package com.example.demo.service;
 
 import com.example.demo.model.BudgetPlan;
-import java.util.List;
 
 public interface BudgetPlanService {
-    BudgetPlan createBudgetPlan(BudgetPlan plan);
-    List<BudgetPlan> getAllBudgetPlans();
-    BudgetPlan getBudgetPlanById(Long id);
+    BudgetPlan createBudgetPlan(Long userId, BudgetPlan plan);
 }
+
 
 
 

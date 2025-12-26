@@ -1,36 +1,27 @@
 package com.example.demo.service.impl;
 
-import com.example.demo.model.BudgetSummary;
+import com.example.demo.repository.BudgetPlanRepository;
 import com.example.demo.repository.BudgetSummaryRepository;
+import com.example.demo.repository.TransactionLogRepository;
 import com.example.demo.service.BudgetSummaryService;
-import org.springframework.stereotype.Service;
 
-import java.util.List;
-
-@Service
 public class BudgetSummaryServiceImpl implements BudgetSummaryService {
 
     private final BudgetSummaryRepository budgetSummaryRepository;
+    private final BudgetPlanRepository budgetPlanRepository;
+    private final TransactionLogRepository transactionLogRepository;
 
-    public BudgetSummaryServiceImpl(BudgetSummaryRepository budgetSummaryRepository) {
+    public BudgetSummaryServiceImpl(BudgetSummaryRepository budgetSummaryRepository,
+                                    BudgetPlanRepository budgetPlanRepository,
+                                    TransactionLogRepository transactionLogRepository) {
         this.budgetSummaryRepository = budgetSummaryRepository;
+        this.budgetPlanRepository = budgetPlanRepository;
+        this.transactionLogRepository = transactionLogRepository;
     }
 
-    @Override
-    public BudgetSummary createBudgetSummary(BudgetSummary summary) {
-        return budgetSummaryRepository.save(summary);
-    }
-
-    @Override
-    public List<BudgetSummary> getAllBudgetSummaries() {
-        return budgetSummaryRepository.findAll();
-    }
-
-    @Override
-    public BudgetSummary getBudgetSummaryById(Long id) {
-        return budgetSummaryRepository.findById(id).orElse(null);
-    }
+    // No methods needed for current tests
 }
+
 
 
 

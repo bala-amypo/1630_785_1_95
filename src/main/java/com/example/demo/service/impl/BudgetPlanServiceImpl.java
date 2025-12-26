@@ -1,37 +1,36 @@
 package com.example.demo.service.impl;
 
+import com.example.demo.exception.BadRequestException;
 import com.example.demo.model.BudgetPlan;
+import com.example.demo.model.User;
 import com.example.demo.repository.BudgetPlanRepository;
+import com.example.demo.repository.UserRepository;
 import com.example.demo.service.BudgetPlanService;
-import org.springframework.stereotype.Service;
 
-import java.util.List;
-
-@Service
 public class BudgetPlanServiceImpl implements BudgetPlanService {
 
     private final BudgetPlanRepository budgetPlanRepository;
+    private final UserRepository userRepository;
 
-    public BudgetPlanServiceImpl(BudgetPlanRepository budgetPlanRepository) {
+    public BudgetPlanServiceImpl(BudgetPlanRepository budgetPlanRepository,
+                                 UserRepository userRepository) {
         this.budgetPlanRepository = budgetPlanRepository;
+        this.userRepository = userRepository;
     }
 
     @Override
-    public BudgetPlan createBudgetPlan(BudgetPlan plan) {
+    public BudgetPlan createBudgetPlan(Long userId, BudgetPlan plan) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new BadRequestException("User not found"));
+        plan.setUser(user);
+        if (budgetPlanRepository
+                .findByUserAndMonthAndYear(user, plan.getMonth(), plan.getYear())
+                .isPresent()) {
+            throw new BadRequestException("Budget plan already exists");
+        }
         return budgetPlanRepository.save(plan);
     }
-
-    @Override
-    public List<BudgetPlan> getAllBudgetPlans() {
-        return budgetPlanRepository.findAll();
-    }
-
-    @Override
-    public BudgetPlan getBudgetPlanById(Long id) {
-        return budgetPlanRepository.findById(id).orElse(null);
-    }
 }
-
 
 
 
