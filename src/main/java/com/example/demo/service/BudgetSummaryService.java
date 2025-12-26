@@ -3,8 +3,10 @@ package com.example.demo.service;
 import com.example.demo.model.BudgetSummary;
 
 public interface BudgetSummaryService {
-    BudgetSummary generateSummary(Long userId, int month, int year);
-    BudgetSummary getSummaryByPlan(Long planId);
+
+    BudgetSummary generateSummary(Long budgetPlanId);
+
+    BudgetSummary getSummary(Long budgetPlanId);
 }
 
 
