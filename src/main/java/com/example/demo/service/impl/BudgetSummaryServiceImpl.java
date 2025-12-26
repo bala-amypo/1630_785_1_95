@@ -1,3 +1,62 @@
+package com.example.demo.service.impl;
+
+import com.example.demo.model.*;
+import com.example.demo.repository.*;
+import com.example.demo.service.BudgetSummaryService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+import java.time.YearMonth;
+import java.util.List;
+
+@Service
+@RequiredArgsConstructor
+public class BudgetSummaryServiceImpl implements BudgetSummaryService {
+    private final BudgetSummaryRepository summaryRepo;
+    private final BudgetPlanRepository planRepo;
+    private final TransactionLogRepository transactionRepo;
+
+    @Override
+    public BudgetSummary generateSummary(Long userId, int month, int year) {
+        BudgetPlan plan = planRepo.findByUserAndMonthAndYear(new User(userId, null, null, null, null), month, year)
+                .orElseThrow(() -> new RuntimeException("Plan not found"));
+
+        YearMonth ym = YearMonth.of(year, month);
+        List<TransactionLog> logs = transactionRepo.findByUserAndTransactionDateBetween(
+                plan.getUser(), ym.atDay(1), ym.atEndOfMonth());
+
+        double income = logs.stream()
+                .filter(l -> l.getCategory().getType().equals(Category.TYPE_INCOME))
+                .mapToDouble(TransactionLog::getAmount).sum();
+        
+        double expense = logs.stream()
+                .filter(l -> l.getCategory().getType().equals(Category.TYPE_EXPENSE))
+                .mapToDouble(TransactionLog::getAmount).sum();
+
+        BudgetSummary summary = new BudgetSummary();
+        summary.setBudgetPlan(plan);
+        summary.setTotalIncome(income);
+        summary.setTotalExpense(expense);
+        summary.setStatus(expense > plan.getExpenseLimit() ? 
+                BudgetSummary.STATUS_EXCEEDED : BudgetSummary.STATUS_UNDER_LIMIT);
+
+        return summaryRepo.save(summary);
+    }
+
+    @Override
+    public BudgetSummary getSummaryByPlan(Long planId) {
+        return summaryRepo.findByBudgetPlan(new BudgetPlan(planId, null, null, null, null, null))
+                .orElseThrow(() -> new RuntimeException("Summary not found"));
+    }
+}
+
+
+
+
+
+
+
+
+
 // package com.example.demo.service.impl;
 
 // import java.util.List;

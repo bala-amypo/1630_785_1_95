@@ -10,32 +10,32 @@
 // import org.springframework.web.bind.annotation.RestController;
 // import org.springframework.web.bind.annotation.RequestMapping;
 // import org.springframework.web.bind.annotation.PathVariable;
-// import com.example.demo.model.BudgetSummary;
-// import com.example.demo.service.BudgetSummaryService;
+// import com.example.demo.model.TransactionLog;
+// import com.example.demo.service.TransactionService;
 // import jakarta.validation.Valid;
 
-// @RequestMapping("/BudgetSummary")
+// @RequestMapping("/TransactionLog")
 // @RestController
-// public class BudgetSummaryController{
-//     @Autowired  BudgetSummaryService ser;
-//     @PostMapping("/createbudgetplan")
-//     public BudgetSummary senddata(@RequestBody BudgetSummary  stu){
-//         return ser.postData4(stu);
+// public class TransactionLogController{
+//     @Autowired  TransactionService ser;
+//     @PostMapping("/createcategory")
+//     public TransactionLog senddata(@RequestBody TransactionLog  stu){
+//         return ser.postData2(stu);
 //     }
-//     @GetMapping("/getaspecificplan")
-//     public List<BudgetSummary> getVal(){
-//         return ser.getAllData4();
+//     @GetMapping("/listallcategories")
+//     public List<TransactionLog> getVal(){
+//         return ser.getAllData2();
 //     }
 //     @DeleteMapping("/delete/{id}")
 //     public String dele(@PathVariable Long id){
-//         return ser.DeleteData4(id);
+//         return ser.DeleteData2(id);
 //     }
 //     @GetMapping("/find/{id}")
-//     public BudgetSummary  Find(@PathVariable Long id){
-//         return ser.getData4(id);
+//     public TransactionLog  Find(@PathVariable Long id){
+//         return ser.getData2(id);
 //     }
 //     @PutMapping("/put/{id}")
-//     public BudgetSummary  putVal(@PathVariable Long id,@RequestBody BudgetSummary entity){
-//         return ser.updateData4(id,entity);
+//     public TransactionLog  putVal(@PathVariable Long id,@RequestBody TransactionLog  entity){
+//         return ser.updateData2(id,entity);
 //     }
 // }
