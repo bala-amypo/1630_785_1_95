@@ -1,3 +1,59 @@
+package com.example.demo.model;
+
+import jakarta.persistence.*;
+import lombok.*;
+import java.time.LocalDateTime;
+
+@Entity
+@Table(name = "budget_summaries")
+@Data 
+@NoArgsConstructor 
+@AllArgsConstructor
+public class BudgetSummary {
+    @Id 
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    
+    @OneToOne 
+    @JoinColumn(name = "plan_id", nullable = false)
+    private BudgetPlan budgetPlan;
+    
+    private Double totalIncome;
+    private Double totalExpense;
+    private String status;
+    private LocalDateTime generatedAt;
+
+    public static final String STATUS_UNDER_LIMIT = "UNDER_LIMIT";
+    public static final String STATUS_EXCEEDED = "EXCEEDED";
+
+    @PrePersist
+    public void onCreate() {
+        this.generatedAt = LocalDateTime.now();
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // package com.example.demo.model;
 
 // import java.math.BigDecimal;
