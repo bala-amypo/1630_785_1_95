@@ -2,7 +2,6 @@ package com.example.demo.controller;
 
 import com.example.demo.model.TransactionLog;
 import com.example.demo.service.TransactionService;
-
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,19 +16,22 @@ public class TransactionController {
         this.transactionService = transactionService;
     }
 
-    @PostMapping("/{userId}")
-    public TransactionLog addTransaction(
-            @PathVariable Long userId,
-            @RequestBody TransactionLog log) {
-        return transactionService.addTransaction(userId, log);
+    @PostMapping
+    public TransactionLog create(@RequestBody TransactionLog transactionLog) {
+        return transactionService.createTransaction(transactionLog);
     }
 
-    @GetMapping("/{userId}")
-    public List<TransactionLog> getUserTransactions(
-            @PathVariable Long userId) {
-        return transactionService.getUserTransactions(userId);
+    @GetMapping
+    public List<TransactionLog> getAll() {
+        return transactionService.getAllTransactions();
+    }
+
+    @GetMapping("/{id}")
+    public TransactionLog getById(@PathVariable Long id) {
+        return transactionService.getTransactionById(id);
     }
 }
+
 
 
 

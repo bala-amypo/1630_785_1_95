@@ -2,7 +2,6 @@ package com.example.demo.controller;
 
 import com.example.demo.model.Category;
 import com.example.demo.service.CategoryService;
-
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,13 +17,18 @@ public class CategoryController {
     }
 
     @PostMapping
-    public Category addCategory(@RequestBody Category category) {
-        return categoryService.addCategory(category);
+    public Category create(@RequestBody Category category) {
+        return categoryService.createCategory(category);
     }
 
     @GetMapping
-    public List<Category> getAllCategories() {
+    public List<Category> getAll() {
         return categoryService.getAllCategories();
+    }
+
+    @GetMapping("/{id}")
+    public Category getById(@PathVariable Long id) {
+        return categoryService.getCategoryById(id);
     }
 }
 
