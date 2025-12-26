@@ -1,6 +1,6 @@
-package com.example.demo.model;
+// package com.example.demo.model;
 
-public enum BudgetStatus {
-    UNDER_LIMIT,
-    OVER_LIMIT
-}
+// public enum BudgetStatus {
+//     UNDER_LIMIT,
+//     OVER_LIMIT
+// }
