@@ -2,8 +2,9 @@ package com.example.demo.controller;
 
 import com.example.demo.model.BudgetPlan;
 import com.example.demo.service.BudgetPlanService;
-
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/budget-plans")
@@ -15,22 +16,21 @@ public class BudgetPlanController {
         this.budgetPlanService = budgetPlanService;
     }
 
-    @PostMapping("/{userId}")
-    public BudgetPlan createPlan(
-            @PathVariable Long userId,
-            @RequestBody BudgetPlan plan) {
-        return budgetPlanService.createBudgetPlan(userId, plan);
+    @PostMapping
+    public BudgetPlan create(@RequestBody BudgetPlan plan) {
+        return budgetPlanService.createBudgetPlan(plan);
     }
 
-    @GetMapping("/{userId}")
-    public BudgetPlan getPlan(
-            @PathVariable Long userId,
-            @RequestParam Integer month,
-            @RequestParam Integer year) {
-        return budgetPlanService.getBudgetPlan(userId, month, year);
+    @GetMapping
+    public List<BudgetPlan> getAll() {
+        return budgetPlanService.getAllBudgetPlans();
+    }
+
+    @GetMapping("/{id}")
+    public BudgetPlan getById(@PathVariable Long id) {
+        return budgetPlanService.getBudgetPlanById(id);
     }
 }
-
 
 
 
