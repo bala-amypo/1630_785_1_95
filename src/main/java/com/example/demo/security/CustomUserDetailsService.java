@@ -8,6 +8,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
+
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
 
@@ -16,7 +17,7 @@ public class CustomUserDetailsService implements UserDetailsService {
     // public CustomUserDetailsService(UserRepository userRepository) {
     //     this.userRepository = userRepository;
     // }
-@Autowired UserRepository userRepository;
+    @Autowired UserRepository userRepository;
     @Override
     public UserDetails loadUserByUsername(String email)
             throws UsernameNotFoundException {
