@@ -13,6 +13,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     private final UserRepository userRepository;
 
+    // This is what Spring is trying to use; now a UserRepository bean exists
     public CustomUserDetailsService(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
