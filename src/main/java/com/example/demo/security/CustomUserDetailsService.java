@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 public class CustomUserDetailsService implements UserDetailsService {
 
     @Autowired
-    private UserRepository userRepository;
+    private UserRepository userRepository;   // this is the field Spring was complaining about
 
     @Override
     public UserDetails loadUserByUsername(String email)
