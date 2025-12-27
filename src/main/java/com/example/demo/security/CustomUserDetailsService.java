@@ -1,11 +1,4 @@
-// // src/main/java/com/example/demo/security/CustomUserDetailsService.java
-// package com.example.demo.security;
-
-// import org.springframework.security.core.userdetails.UserDetailsService;
-
-// public interface CustomUserDetailsService extends UserDetailsService {
-//     // no implementation needed for unit tests
-// }
+// src/main/java/com/example/demo/security/CustomUserDetailsService.java
 package com.example.demo.security;
 
 import com.example.demo.model.User;
@@ -23,14 +16,13 @@ public class CustomUserDetailsService implements UserDetailsService {
     public CustomUserDetailsService(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
-    
+
     @Override
     public UserDetails loadUserByUsername(String email)
             throws UsernameNotFoundException {
 
         User user = userRepository.findByEmail(email)
-                .orElseThrow(() ->
-                        new UsernameNotFoundException("User not found"));
+                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
 
         return org.springframework.security.core.userdetails.User
                 .withUsername(user.getEmail())
