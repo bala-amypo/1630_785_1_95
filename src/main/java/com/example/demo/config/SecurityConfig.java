@@ -28,7 +28,6 @@ public class SecurityConfig {
         return http.build();
     }
 
-    // This exposes AuthenticationManager, fixing the AuthController error
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration)
             throws Exception {
