@@ -13,6 +13,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     boolean existsByEmail(String email);
 }
+
 // package com.example.demo.repository;
 
 // import com.example.demo.model.User;
